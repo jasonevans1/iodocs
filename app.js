@@ -266,15 +266,16 @@ function oauthSuccess(req, res, next) {
 // processRequest - handles API call
 //
 function processRequest(req, res, next) {
-    if (config.debug) {
+	if (config.debug) {
         console.log(util.inspect(req.body, null, 3));
-    };
-
+	}
+	
     var reqQuery = req.body,
         params = reqQuery.params || {},
         methodURL = reqQuery.methodUri,
         httpMethod = reqQuery.httpMethod,
         apiKey = reqQuery.apiKey,
+        apiUsernameKey = reqQuery.apiUsernamekey,        
         apiSecret = reqQuery.apiSecret,
         apiName = reqQuery.apiName
         apiConfig = apisConfig[apiName],
@@ -457,6 +458,9 @@ function processRequest(req, res, next) {
         // Add API Key to params, if any.
         if (apiKey != '') {
             options.path += '&' + apiConfig.keyParam + '=' + apiKey;
+        }
+        if (apiConfig.usernameKeyParam && apiUsernameKey != '') {
+            options.path += '&' + apiConfig.usernameKeyParam + '=' + apiUsernameKey;
         }
 
         // Perform signature routine, if any.

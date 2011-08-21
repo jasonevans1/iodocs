@@ -23,14 +23,23 @@ form#credentials
                  - var defaultKey =apiInfo.auth.defaultKey
              - else
                  - var defaultKey =''
-
+             - if (apiInfo.auth.type == 'username-key')
+                 - if (apiInfo.auth.defaultUsernameKey)
+                    - var defaultUsernameKey =apiInfo.auth.defaultUsernameKey
+                 - else
+                    - var defaultUsernameKey =''
              - if (apiInfo.auth.defaultSecret)
                  - var defaultSecret =apiInfo.auth.defaultSecret
              - else
                  - var defaultSecret =''
+             div    
+                 - if (apiInfo.auth.type == 'username-key')
+                    label(for='usernamekey') API Username
+                    input(id='usernamekey', name='usernamekey', value=defaultUsernameKey, style='color=#EEEEEE')                 
              div
-                 label(for='key') API Key
+                 label(for='key') API Key                 
                  input(id='key', name='key', value=defaultKey, style='color=#EEEEEE')
+                 
              div
                  - if (apiInfo.oauth || apiInfo.signature)
                      label(for='secret') Shared Secret
